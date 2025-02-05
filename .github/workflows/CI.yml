@@ -45,6 +45,17 @@ jobs:
         with:
           path: ./sample/build
 
+  npm-publish:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: ls
+        run: ls
+      - name: cd to lib
+        run: cd ./lib
+      - name: publish package
+        run: npx npm-publish --token ${{ secrets.NPM_TOKEN }} --access public
+
   deploy:
     environment:
       name: github-pages
@@ -57,12 +68,5 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-  build-package:
-    name: Build Package
-    runs-on: ubuntu-latest
-    steps:
-      - name: cd to lib
-        run: cd lib
-      - name: publish package
-        run: npx npm-publish --token ${{ secrets.NPM_TOKEN }} --access public
+
 
