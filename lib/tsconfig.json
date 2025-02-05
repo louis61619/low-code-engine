@@ -1,27 +1,20 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
+    // 打包位置
+    "outDir": "dist",
+    // 使用哪種模組化
     "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
+    // bebel編譯
+    "target": "es5",
+    // 類型支持
+    "declaration": true,
     "jsx": "react-jsx",
-    "types": ["node", "webpack-env"],
+    // 使用node方式查找文件
+    "moduleResolution": "node",
+    // 支持default import
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
   },
-  "include": [
-    "src"
-  ]
+  "include": ["./src"],
+  "exclude": ["node_modules"]
 }

@@ -2,15 +2,17 @@
   "name": "@l-lib/low-code-engine",
   "version": "0.0.1",
   "description": "a simple low code engine to generate page",
-  "main": "src/index.ts",
-  "author": "",
+  "main": "dist/index.js",
+  "author": "Louis Hsieh",
+  "scripts": {
+    "build-ts": "tsc -p tsconfig.json"
+  },
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@iconify/icons-material-symbols": "^1.2.58",
     "@iconify/react": "^4.1.1",
-    "react-beautiful-dnd": "^13.1.1",
-    "typescript": "^4.9.5"
+    "react-beautiful-dnd": "^13.1.1"
   },
   "peerDependencies": {
     "react": "^18.2.0"
@@ -19,6 +21,8 @@
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.69",
     "@types/react": "^18.2.46",
-    "@types/react-dom": "^18.2.18"
+    "@types/react-dom": "^18.2.18",
+    "typescript": "^4.9.5",
+    "tsup": "^8.3.6"
   }
 }

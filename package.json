@@ -7,13 +7,14 @@
   "description": "a simple low code engine to generate page",
   "scripts": {
     "start": "npm run start -w sample",
-    "build": "npm run build -w sample"
+    "build": "npm run build -w sample",
+    "build:lib": "npm run build-ts -w lib"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/louis61619/low-code-engine.git"
   },
-  "homepage": "https://github.com/louis61619/low-code-engine.git",
+  "homepage": "https://louis61619.github.io/low-code-engine",
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/webpack-env": "^1.18.5",

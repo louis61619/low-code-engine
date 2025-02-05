@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/louis61619/low-code-engine.git"
   },
-  "homepage": "https://github.com/louis61619/low-code-engine.git",
+  "homepage": "https://louis61619.github.io/low-code-engine",
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
