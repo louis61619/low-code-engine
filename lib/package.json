@@ -1,8 +1,12 @@
 {
   "name": "@l-lib/low-code-engine",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "a simple low code engine to generate page",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "author": "Louis Hsieh",
   "repository": {
     "type": "git",
