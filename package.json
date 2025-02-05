@@ -1,0 +1,25 @@
+{
+  "name": "low-code-engine",
+  "private": true,
+  "workspaces": [
+    "./*"
+  ],
+  "description": "a simple low code engine to generate page",
+  "scripts": {
+    "start": "npm run start -w sample",
+    "build": "npm run build -w sample"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/louis61619/low-code-engine.git"
+  },
+  "homepage": "https://github.com/louis61619/low-code-engine.git",
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/webpack-env": "^1.18.5",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.4",
+    "react-scripts": "5.0.1"
+  }
+}
