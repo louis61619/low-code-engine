@@ -53,10 +53,16 @@ jobs:
     needs: build
 
     steps:
-      - uses: JS-DevTools/npm-publish@v3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          package: ../lib
       - name: Publish to GitHub Pages 🚀
         id: deployment
         uses: actions/deploy-pages@v4
+
+  build-package:
+    name: Build Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: cd to lib
+        run: cd lib
+      - name: publish package
+        run: npx npm-publish --token ${{ secrets.NPM_TOKEN }} --access public
+

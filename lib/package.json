@@ -4,6 +4,16 @@
   "description": "a simple low code engine to generate page",
   "main": "dist/index.js",
   "author": "Louis Hsieh",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/louis61619/low-code-engine.git"
+  },
+  "homepage": "https://louis61619.github.io/low-code-engine",
+  "keywords": [
+    "low-code",
+    "engine",
+    "react"
+  ],
   "scripts": {
     "build-ts": "tsc -p tsconfig.json"
   },
