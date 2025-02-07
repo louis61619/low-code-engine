@@ -1,6 +1,10 @@
 import { Global, css, Theme } from '@emotion/react';
-import { Header } from './common/header';
+import Markdown from 'react-markdown';
 import { Sample } from './sample';
+import desp from '../../README.md';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { Header } from './common/header';
 
 function App() {
   return (
@@ -18,11 +22,22 @@ function App() {
             box-sizing: border-box;
           }
 
-          main {
-            height: calc(100% - 60px);
-            overflow: auto;
-            width: 100%;
-            padding: 8px;
+          .desp {
+            width: 800px;
+            margin: 0 auto;
+            padding-bottom: 24px;
+
+            img {
+              display: none;
+            }
+          }
+
+          .sample {
+            margin: 24px auto;
+            border: 1px solid #e4e7ed;
+            width: 1000px;
+            padding: 10px;
+            height: 500px;
           }
 
           :root {
@@ -30,11 +45,31 @@ function App() {
           }
         `}
       />
-
       <Header />
-      <main>
+      <div className="sample">
         <Sample />
-      </main>
+      </div>
+      <div className="desp">
+        <Markdown
+          components={{
+            code({ className, children, ...rest }) {
+              const _SyntaxHighlighter = SyntaxHighlighter as any;
+              const match = /language-(\w+)/.exec(className || '');
+              return match ? (
+                <_SyntaxHighlighter PreTag="div" language={match[1]} style={vs} {...rest}>
+                  {children}
+                </_SyntaxHighlighter>
+              ) : (
+                <code {...rest} className={className}>
+                  {children}
+                </code>
+              );
+            },
+          }}
+        >
+          {desp}
+        </Markdown>
+      </div>
     </>
   );
 }

@@ -34,7 +34,10 @@ export const Playground: React.FC<{
   const [_schema, _setSchema] = useState(schema);
 
   useEffect(() => {
-    _setSchema(schema);
+    _setSchema((preSchema) => {
+      if (JSON.stringify(schema) === JSON.stringify(preSchema)) return preSchema;
+      return schema;
+    });
   }, [schema]);
 
   return (

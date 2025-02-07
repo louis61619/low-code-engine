@@ -24,7 +24,7 @@ const HeaderWrapper = styled.header`
 
 const Button = styled.a`
   padding: 0 16px;
-  border: 1px solid ${theme.color.border};
+  /* border: 1px solid ${theme.color.border}; */
   height: 40px;
   border-radius: 6px;
   display: flex;

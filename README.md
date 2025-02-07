@@ -1,6 +1,8 @@
 ![alt text](image.png)
 
-a simple low code engine
+a simple, intuitive, extensible low-code core components
+
+[demo](https://louis61619.github.io/low-code-engine/)
 
 ## install
 

@@ -1,5 +1,5 @@
 const path = require('path');
-const { getLoader, loaderByName } = require('@craco/craco');
+const { getLoader, loaderByName, addAfterLoader } = require('@craco/craco');
 
 const packages = [];
 packages.push(path.join(__dirname, '../lib'));
@@ -20,6 +20,17 @@ module.exports = {
         ({ constructor }) => constructor && constructor.name === 'ModuleScopePlugin',
       );
       webpackConfig.resolve.plugins.splice(scopePluginIndex, 1);
+
+      const markdownLoader = {
+        test: /\.md$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: require.resolve('raw-loader'),
+          },
+        ],
+      };
+      addAfterLoader(webpackConfig, loaderByName('babel-loader'), markdownLoader);
 
       return webpackConfig;
     },
