@@ -12,6 +12,7 @@ npm i @l-lib/low-code-engine
 
 ```jsx
 import React, { useState } from 'react';
+import { Playground } from '@l-lib/low-code-engine';
 
 const View = ({ configValue }) => {
   return <div>{configValue.value || 'text'}</div>;
@@ -43,5 +44,46 @@ function Sample() {
   return (
     <Playground schema={schema} setSchema={setSchema} list={[textCompInfo]} />
   );
+}
+```
+use Typescript
+
+```tsx
+import { useState } from 'react';
+import { Playground, Schema } from '@l-lib/low-code-engine';
+import { CompInfoType, ConfigCompProps, ViewCompProps } from '@l-lib/low-code-engine';
+
+type ConfigType = {
+  value: string;
+};
+
+const View: ViewCompProps<ConfigType> = ({ configValue }) => {
+  return <div>{configValue.value || 'text'}</div>;
+};
+
+const Config: ConfigCompProps<ConfigType> = ({ configValue, onUpdate }) => {
+  return (
+    <input
+      type="text"
+      value={configValue.value || 'text'}
+      onChange={(e) => {
+        onUpdate({ value: e.target.value });
+      }}
+    />
+  );
+};
+
+export const textCompInfo: CompInfoType<ConfigType> = {
+  type: 'text',
+  name: 'text',
+  group: 'basic',
+  view: View,
+  config: Config,
+};
+
+
+function Sample() {
+  const [schema, setSchema] = useState<Schema>();
+  return <Playground schema={schema} setSchema={setSchema} list={[textCompInfo, chartCompInfo]} />;
 }
 ```

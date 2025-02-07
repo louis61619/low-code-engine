@@ -7,7 +7,7 @@ node_modules
 
 # testing
 /coverage
-/publish.sh
+/lib/publish.sh
 
 # production
 /sample/build
