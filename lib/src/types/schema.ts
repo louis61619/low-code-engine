@@ -16,7 +16,7 @@ export type Properties = {
 export type ViewProps<D> = {
   uuid: string;
   configValue: Partial<D>;
-};
+} & { [key: string]: any };
 
 export type ConfigProps<D> = {
   onUpdate: (data: Partial<D>) => void;

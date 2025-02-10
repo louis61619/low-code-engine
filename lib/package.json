@@ -1,6 +1,6 @@
 {
   "name": "@l-lib/low-code-engine",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "description": "a simple low code engine to generate page",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
