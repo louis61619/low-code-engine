@@ -13,7 +13,6 @@ export const RenderSchema = ({ schema }: Props) => {
     <>
       {schema.order?.length
         ? schema.order.map((uuid, index) => {
-            // console.log(schema.properties, uuid, '000');
             const content = schema.properties?.[uuid];
             if (!content) return null;
             const type = content.type;

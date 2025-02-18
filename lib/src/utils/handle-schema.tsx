@@ -27,3 +27,7 @@ export function getKeepKeyToIdMap(schema: Schema) {
 
   return { keyMap, keyRelationMap };
 }
+
+export const isFromToolbar = (id: any): string => {
+  return typeof id === 'string' && /^\[bar\]/.test(id) && id.replace(/^\[bar\]/, '');
+};

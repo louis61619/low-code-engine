@@ -1,9 +1,9 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DndContext } from '@dnd-kit/core';
 import { CompInfoType, Schema } from '../types/schema';
 import { genUUID } from '../utils/gen-uuid';
-import { getKeepKeyToIdMap } from '../utils/handle-schema';
+import { getKeepKeyToIdMap, isFromToolbar } from '../utils/handle-schema';
 
 type PlaygroundProviderProps = {
   schema: Schema;
@@ -20,6 +20,7 @@ type ContextType = {
   deleteContentById: (id: string) => void;
   initId: string;
   setInitId: (id: string) => void;
+  onDragId: string;
 } & PlaygroundProviderProps;
 
 const reorder = (list: string[] = [], startIndex: number, endIndex: number) => {
@@ -51,6 +52,7 @@ export const PlaygroundContext = createContext<ContextType>({
   updateConfigValueById: () => {},
   deleteContentById: () => {},
   initId: '',
+  onDragId: '',
   setInitId: () => {},
 });
 
@@ -63,12 +65,13 @@ export const PlaygroundProvider: React.FC<PlaygroundProviderProps & { children: 
 }) => {
   const [currentId, setCurrentId] = useState<string>('');
   const [initId, setInitId] = useState<string>('');
+  const [onDragId, setOnDragId] = useState<string>('');
 
   useEffect(() => {
     if (!currentId && schema.order && schema.order.length) {
       setCurrentId(schema.order[0]);
     }
-  }, [currentId, schema.order])
+  }, [currentId, schema.order]);
 
   const compsMap: { [key: string]: CompInfoType } = useMemo(() => {
     return list.reduce((pre, cur) => {
@@ -119,34 +122,63 @@ export const PlaygroundProvider: React.FC<PlaygroundProviderProps & { children: 
         deleteContentById,
         initId,
         setInitId,
+        onDragId,
       }}
     >
-      <DragDropContext
+      <DndContext
+        onDragStart={(res) => {
+          const { active } = res;
+          const { id } = active;
+          if (isFromToolbar(id)) {
+            setOnDragId(isFromToolbar(id));
+          }
+          // console.log(res.active.id, '---res');
+        }}
+        onDragOver={(res) => {
+          const { active } = res;
+          const { id } = active;
+          // if (isFromToolbar(id)) {
+          //   console.log(id, '---id');
+          // }
+        }}
         onDragEnd={(res) => {
-          const { source, destination, draggableId } = res;
+          const { over, active } = res;
 
-          if (!destination) {
+          // We dropped outside of the over so clean up so we can start fresh.
+          if (!over) {
             return;
           }
-          // 如何做到在不同layout下實時預覽 要處理的應該就壓到的寬度而已
-          // draggableId 為欠套的路徑
 
-          if (/^\[bar\]/.test(source.droppableId) && destination?.droppableId) {
-            // from toolbar
+          const toolbarId = isFromToolbar(active.id);
+          if (toolbarId) {
+            console.log(active.id, '---over.id');
             const content = schema;
-            const compKey = addPropertiesToContent(content, draggableId);
-            content.order?.splice(destination.index, 0, compKey);
+            const compKey = addPropertiesToContent(content, toolbarId);
+            content.order?.splice(0, 0, compKey);
             setCurrentId(compKey);
             setInitId(compKey);
-          } else {
-            schema.order = reorder(schema.order, source.index, destination.index);
           }
-
+          // console.log(res, '---res');
+          // const { source, destination, draggableId } = res;
+          // if (!destination) {
+          //   return;
+          // }
+          // if (/^\[bar\]/.test(source.droppableId) && destination?.droppableId) {
+          //   // from toolbar
+          //   const content = schema;
+          //   const compKey = addPropertiesToContent(content, draggableId);
+          //   content.order?.splice(destination.index, 0, compKey);
+          //   setCurrentId(compKey);
+          //   setInitId(compKey);
+          // } else {
+          //   schema.order = reorder(schema.order, source.index, destination.index);
+          // }
+          console.log(schema, '---schema');
           setSchema?.({ ...schema });
         }}
       >
         {children}
-      </DragDropContext>
+      </DndContext>
     </PlaygroundContext.Provider>
   );
 };

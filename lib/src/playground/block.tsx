@@ -78,20 +78,16 @@ export const Block = React.forwardRef<HTMLDivElement, Props>(({ children, uuid, 
   const { currentId, setCurrentId } = usePlaygroundContext();
 
   return (
-    <Draggable draggableId={uuid} index={index}>
-      {(provided) => (
-        <BlockWrapper
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          className={currentId === uuid ? 'active' : ''}
-          onClick={() => {
-            setCurrentId(uuid);
-          }}
-        >
-          <div className="-container">{children}</div>
-          <ToolBar className="-tool-bar" draggableProps={provided.dragHandleProps} uuid={uuid} />
-        </BlockWrapper>
-      )}
-    </Draggable>
+    <div>
+      <BlockWrapper
+        className={currentId === uuid ? 'active' : ''}
+        onClick={() => {
+          setCurrentId(uuid);
+        }}
+      >
+        <div className="-container">{children}</div>
+        <ToolBar className="-tool-bar" uuid={uuid} />
+      </BlockWrapper>
+    </div>
   );
 });

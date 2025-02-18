@@ -1,10 +1,11 @@
 import styled from '@emotion/styled';
-import React, { forwardRef, useRef } from 'react';
+import React, { forwardRef, useMemo, useRef } from 'react';
+import { DragOverlay } from '@dnd-kit/core';
 import { usePlaygroundContext } from './context';
-import { Droppable, Draggable } from '../common/dnd';
+import { Droppable, Draggable, dropAnimation, Overlay } from '../common/dnd';
 import { CompInfoType } from '../types/schema';
-import { DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { Title } from '../common/title';
+import { isFromToolbar } from '../utils/handle-schema';
 
 const ToolbarWrapper = styled.div`
   border-right: 1px solid ${(props) => props.theme.color.border};
@@ -50,32 +51,20 @@ const IconBlockWrapper = styled.div`
   }
 `;
 
-const IconBlock = forwardRef<
-  any,
-  { comp: CompInfoType; style?: React.CSSProperties; snapshot?: DraggableStateSnapshot }
->(({ comp, snapshot, ...props }, ref) => {
+const IconBlock = forwardRef<any, { comp: CompInfoType; style?: React.CSSProperties }>(({ comp, ...props }, ref) => {
   const { name } = comp;
-
-  // let style = props.style;
-  // if (snapshot && snapshot.isDropAnimating && snapshot.draggingOver) {
-  //   style = {
-  //     ...style,
-  //     transitionDuration: `0.0000001s`,
-  //     opacity: 0,
-  //   };
-  // }
 
   return (
     <IconBlockWrapper ref={ref} {...props}>
-      {/* {icon} */}
       <span className="-txt">{name}</span>
     </IconBlockWrapper>
   );
 });
 
 type GroupComponentsListType = { groupName: string; components: CompInfoType[] }[];
+
 export const ToolBar = () => {
-  const { list: componentList } = usePlaygroundContext();
+  const { list: componentList, onDragId } = usePlaygroundContext();
   const list = componentList.reduce((pre: GroupComponentsListType, cur) => {
     const _list = [...pre];
     const listItem = _list.find((item) => item.groupName === cur.group);
@@ -90,6 +79,14 @@ export const ToolBar = () => {
     return _list;
   }, []);
 
+  const overlayComp = useMemo(() => {
+    const _onDragId = isFromToolbar(onDragId);
+    if (!_onDragId) return null;
+    return componentList.find((item) => item.type === _onDragId);
+  }, [onDragId, componentList]);
+
+  console.log(overlayComp, '---overlayComp');
+
   return (
     <>
       <ToolbarWrapper>
@@ -102,32 +99,14 @@ export const ToolBar = () => {
               <div>
                 <div className="-btns">
                   {item.components.map((comp, index) => {
-                    const { type } = comp;
+                    const { type, name } = comp;
 
                     return (
-                      <Droppable droppableId={'[bar]' + type} key={'[bar]' + type} isDropDisabled={true}>
-                        {(provided, snapshot) => (
-                          <div className="-icon-btn" ref={provided.innerRef}>
-                            <Draggable key={type} draggableId={type} index={index}>
-                              {(provided, snapshot) => {
-                                return (
-                                  <>
-                                    <IconBlock
-                                      comp={comp}
-                                      {...provided.draggableProps}
-                                      {...provided.dragHandleProps}
-                                      snapshot={snapshot}
-                                      ref={provided.innerRef}
-                                    />
-                                    {snapshot.isDragging && <IconBlock comp={comp} />}
-                                  </>
-                                );
-                              }}
-                            </Draggable>
-                            <div style={{ position: 'absolute' }}>{provided.placeholder}</div>
-                          </div>
-                        )}
-                      </Droppable>
+                      <div className="-icon-btn" key={'[bar]' + type}>
+                        <Draggable id={'[bar]' + type}>
+                          <IconBlock comp={comp} />
+                        </Draggable>
+                      </div>
                     );
                   })}
                 </div>
@@ -136,6 +115,7 @@ export const ToolBar = () => {
           );
         })}
       </ToolbarWrapper>
+      <DragOverlay dropAnimation={dropAnimation}>{overlayComp ? <IconBlock comp={overlayComp} /> : null}</DragOverlay>
     </>
   );
 };
