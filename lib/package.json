@@ -1,6 +1,6 @@
 {
   "name": "@l-lib/low-code-engine",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "a simple low code engine to generate page",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -30,8 +30,8 @@
     "react-beautiful-dnd": "^13.1.1"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0"
   },
   "devDependencies": {
     "@types/jest": "^27.5.2",
