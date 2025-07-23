@@ -10,7 +10,7 @@
   "author": "Louis Hsieh",
   "repository": {
     "type": "git",
-    "url": "https://github.com/louis61619/low-code-engine.git"
+    "url": "git+https://github.com/louis61619/low-code-engine.git"
   },
   "homepage": "https://louis61619.github.io/low-code-engine",
   "keywords": [
