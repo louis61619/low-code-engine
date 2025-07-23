@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext } from '../common/dnd';
 import { CompInfoType, Schema } from '../types/schema';
 import { genUUID } from '../utils/gen-uuid';
 import { getKeepKeyToIdMap } from '../utils/handle-schema';
@@ -68,7 +68,7 @@ export const PlaygroundProvider: React.FC<PlaygroundProviderProps & { children: 
     if (!currentId && schema.order && schema.order.length) {
       setCurrentId(schema.order[0]);
     }
-  }, [currentId, schema.order])
+  }, [currentId, schema.order]);
 
   const compsMap: { [key: string]: CompInfoType } = useMemo(() => {
     return list.reduce((pre, cur) => {

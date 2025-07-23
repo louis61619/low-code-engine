@@ -25,9 +25,9 @@
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@hello-pangea/dnd": "^18.0.1",
     "@iconify/icons-material-symbols": "^1.2.58",
-    "@iconify/react": "^4.1.1",
-    "react-beautiful-dnd": "^13.1.1"
+    "@iconify/react": "^4.1.1"
   },
   "peerDependencies": {
     "react": ">=18.2.0",

@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
 import React, { forwardRef, useRef } from 'react';
 import { usePlaygroundContext } from './context';
-import { Droppable, Draggable } from '../common/dnd';
+import { Droppable, Draggable, DraggableStateSnapshot } from '../common/dnd';
 import { CompInfoType } from '../types/schema';
-import { DraggableStateSnapshot } from 'react-beautiful-dnd';
 import { Title } from '../common/title';
 
 const ToolbarWrapper = styled.div`
