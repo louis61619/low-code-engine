@@ -2,7 +2,8 @@
 
 a simple, intuitive, extensible low-code core components
 
-[demo](https://louis61619.github.io/low-code-engine/)
+demo:
+AI low code platform [link](https://github.com/louis61619/form-generator)
 
 ## install
 
